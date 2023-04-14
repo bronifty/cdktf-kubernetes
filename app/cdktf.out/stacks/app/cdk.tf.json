@@ -1,0 +1,201 @@
+{
+  "//": {
+    "metadata": {
+      "backend": "local",
+      "stackName": "app",
+      "version": "0.15.5"
+    },
+    "outputs": {
+      "app": {
+        "app_backend": {
+          "url": "app_backend_url_CAA2B50B"
+        },
+        "app_frontend": {
+          "url": "app_frontend_url_5DD99814"
+        }
+      }
+    }
+  },
+  "output": {
+    "app_backend_url_CAA2B50B": {
+      "value": "http://localhost:30002"
+    },
+    "app_frontend_url_5DD99814": {
+      "value": "http://localhost:30001"
+    }
+  },
+  "provider": {
+    "kubernetes": [
+      {
+        "config_path": "/root/codes/cdktf/kubernetes/learn-terraform-cdktf-applications/kubeconfig.yaml"
+      }
+    ]
+  },
+  "resource": {
+    "kubernetes_deployment": {
+      "app_backend_deployment_1A8B5520": {
+        "//": {
+          "metadata": {
+            "path": "app/app_backend/deployment/deployment",
+            "uniqueId": "app_backend_deployment_1A8B5520"
+          }
+        },
+        "metadata": {
+          "labels": {
+            "app": "myapp",
+            "component": "backend",
+            "environment": "dev"
+          },
+          "name": "myapp-backend-dev"
+        },
+        "spec": {
+          "replicas": "1",
+          "selector": {
+            "match_labels": {
+              "app": "myapp",
+              "component": "backend",
+              "environment": "dev"
+            }
+          },
+          "template": {
+            "metadata": {
+              "labels": {
+                "app": "myapp",
+                "component": "backend",
+                "environment": "dev"
+              }
+            },
+            "spec": {
+              "container": [
+                {
+                  "env": [
+                  ],
+                  "image": "localhost:5000/nocorp-backend:latest",
+                  "name": "myapp-backend-dev"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "app_frontend_deployment_0EE98C72": {
+        "//": {
+          "metadata": {
+            "path": "app/app_frontend/deployment/deployment",
+            "uniqueId": "app_frontend_deployment_0EE98C72"
+          }
+        },
+        "metadata": {
+          "labels": {
+            "app": "myapp",
+            "component": "frontend",
+            "environment": "dev"
+          },
+          "name": "myapp-frontend-dev"
+        },
+        "spec": {
+          "replicas": "2",
+          "selector": {
+            "match_labels": {
+              "app": "myapp",
+              "component": "frontend",
+              "environment": "dev"
+            }
+          },
+          "template": {
+            "metadata": {
+              "labels": {
+                "app": "myapp",
+                "component": "frontend",
+                "environment": "dev"
+              }
+            },
+            "spec": {
+              "container": [
+                {
+                  "env": [
+                    {
+                      "name": "BACKEND_APP_URL",
+                      "value": "http://localhost:30002"
+                    }
+                  ],
+                  "image": "localhost:5000/nocorp-frontend:latest",
+                  "name": "myapp-frontend-dev"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "kubernetes_service": {
+      "app_backend_service_EAD583EF": {
+        "//": {
+          "metadata": {
+            "path": "app/app_backend/service/service",
+            "uniqueId": "app_backend_service_EAD583EF"
+          }
+        },
+        "metadata": {
+          "name": "myapp-backend-dev"
+        },
+        "spec": {
+          "port": [
+            {
+              "node_port": 30002,
+              "port": 80,
+              "protocol": "TCP",
+              "target_port": "80"
+            }
+          ],
+          "selector": {
+            "app": "myapp",
+            "component": "backend",
+            "environment": "dev"
+          },
+          "type": "NodePort"
+        }
+      },
+      "app_frontend_service_C2863249": {
+        "//": {
+          "metadata": {
+            "path": "app/app_frontend/service/service",
+            "uniqueId": "app_frontend_service_C2863249"
+          }
+        },
+        "metadata": {
+          "name": "myapp-frontend-dev"
+        },
+        "spec": {
+          "port": [
+            {
+              "node_port": 30001,
+              "port": 80,
+              "protocol": "TCP",
+              "target_port": "80"
+            }
+          ],
+          "selector": {
+            "app": "myapp",
+            "component": "frontend",
+            "environment": "dev"
+          },
+          "type": "NodePort"
+        }
+      }
+    }
+  },
+  "terraform": {
+    "backend": {
+      "local": {
+        "path": "/root/codes/cdktf/kubernetes/learn-terraform-cdktf-applications/app/terraform.app.tfstate"
+      }
+    },
+    "required_providers": {
+      "kubernetes": {
+        "source": "kubernetes",
+        "version": "2.19.0"
+      }
+    }
+  }
+}
