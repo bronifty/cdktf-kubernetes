@@ -8,6 +8,14 @@
       "synthesizedStackPath": "stacks/app/cdk.tf.json",
       "annotations": [],
       "dependencies": []
+    },
+    "app-test": {
+      "name": "app-test",
+      "constructPath": "app-test",
+      "workingDirectory": "stacks/app-test",
+      "synthesizedStackPath": "stacks/app-test/cdk.tf.json",
+      "annotations": [],
+      "dependencies": []
     }
   }
 }
