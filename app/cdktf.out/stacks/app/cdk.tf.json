@@ -117,6 +117,10 @@
                     {
                       "name": "BACKEND_APP_URL",
                       "value": "http://localhost:30002"
+                    },
+                    {
+                      "name": "TEST_VAR",
+                      "value": "test"
                     }
                   ],
                   "image": "localhost:5000/nocorp-frontend:latest",
