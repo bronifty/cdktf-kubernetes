@@ -62,7 +62,10 @@ class MyStack extends TerraformStack {
     );
     new SimpleKubernetesWebApp(this, "app_frontend", {
       ...config.frontend,
-      env: { BACKEND_APP_URL: `http://localhost:${app_backend.config.port}` },
+      env: {
+        BACKEND_APP_URL: `http://localhost:${app_backend.config.port}`,
+        TEST_VAR: "test",
+      },
     });
   }
 }
